@@ -8,6 +8,7 @@ class TitlePage extends Component {
       this.state = {
         data: undefined,
         ownerChangeValue: "",
+        notFound: false,
       }
       this.loadTitle = this.loadTitle.bind(this);
       this.ownerNameHandleChange = this.ownerNameHandleChange.bind(this);
@@ -37,12 +38,20 @@ class TitlePage extends Component {
     loadTitle() {
       var titleNo = this.props.match.params.titleNo;
       fetch(`/api/titles/${titleNo}`)
-        .then(res => res.json())
-        .then(json => {
-          console.log(json)
-          this.setState({
-            data: json,
-          })
+        .then(res => {
+          if (res.status === 404) {
+            this.setState({
+              notFound: true,
+              data: undefined,
+            });
+          } else {
+            res.json().then(json => {
+              this.setState({
+                notFound: false,
+                data: json,
+              })
+            })
+          }
         });
     }
     componentDidMount() {
@@ -60,9 +69,7 @@ class TitlePage extends Component {
       return (
         <div>
           <h3>Title #{titleNo}</h3>
-          {this.state.data === undefined && <p>
-            Loading...
-          </p>}
+          {this.state.data === undefined && (this.state.notFound ? <p>Incorrect title number</p> : <p>Loading...</p>)}
           {this.state.data && <div>
             <Table>
                 <tbody>
