@@ -21,7 +21,7 @@ class TitleSearch extends Component {
       return (
         <div style={{display: "inline-block"}}>
           <Form inline onSubmit={this.handleSubmit}>
-            <Input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter a title number" />
+            <Input id="title" type="number" value={this.state.value} onChange={this.handleChange} placeholder="Enter a title number" />
             &nbsp;
             <Button color="primary" type="submit" value="Submit">Go</Button>
           </Form>
