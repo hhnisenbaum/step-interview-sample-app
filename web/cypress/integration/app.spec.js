@@ -1,14 +1,34 @@
-/// <reference types="Cypress" />
+const data = 'example.json';
 
-context('Actions', () => {
-  const BASE_URL = 'http://localhost:3000';
-  
+describe('Search for titles', () => {
+
   beforeEach(() => {
-    cy.visit(BASE_URL)
+    cy.visit("/")
   })
 
-  it('welcomes me', () => {
-    cy.contains('Welcome to LandOnLite');
+  it('Search for a valid title', () => {
+    cy.fixture(data).then(it => {
+      cy.get('[data-cy=input]').type(it.validTitle);
+      cy.get('[data-cy=submit]').click();
+      cy.get('[data-cy=title]').should($element => {
+        expect($element).to.contain("Title #" + it.validTitle)
+      })
+    })
+  })
+
+  it('Search for an valid title', () => {
+    cy.fixture(data).then(it => {
+      cy.get('[data-cy=input]').type(it.invalidTitle);
+      cy.get('[data-cy=submit]').click();
+      cy.get('[data-cy=title]').should($element => {
+        expect($element).to.contain("Title #1")
+      })
+      cy.contains('Incorrect title number').should($element => {
+        expect($element).to.contain("Title #" + it.invalidTitle)
+      })
+    })
   })
 
 })
+
+
