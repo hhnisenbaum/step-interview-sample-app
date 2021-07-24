@@ -76,11 +76,11 @@ class TitlePage extends Component {
                 <tbody>
                     <tr>
                         <th>Description</th>
-                        <td>{title.description}</td>
+                        <td data-testid="description">{title.description}</td>
                     </tr>
                     <tr>
                         <th>Current Owner</th>
-                        <td>{title.ownerName}</td>
+                        <td data-testid="owner">{title.ownerName}</td>
                     </tr>
                 </tbody>
             </Table>
