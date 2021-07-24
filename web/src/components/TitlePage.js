@@ -57,9 +57,10 @@ class TitlePage extends Component {
     componentDidMount() {
       this.loadTitle();
     }
-    componentDidUpdate(newProps) {
-      var titleNo = this.props.match.params.titleNo;
-      if(this.state.data && String(this.state.data.id) !== String(titleNo)) {
+    componentDidUpdate(prevProps) {
+      var newTitleNo = this.props.match.params.titleNo;
+      var oldTitleNo = prevProps.match.params.titleNo;
+      if(oldTitleNo !== newTitleNo) {
         this.loadTitle();
       }
     }

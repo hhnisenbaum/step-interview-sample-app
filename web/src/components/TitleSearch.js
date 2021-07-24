@@ -15,6 +15,7 @@ class TitleSearch extends Component {
       this.setState({value: event.target.value});
     }
     handleSubmit(event) {
+      event.preventDefault();
       this.props.history.push(`/titles/${this.state.value}`);
     }
     render() {
