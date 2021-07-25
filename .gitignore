@@ -28,3 +28,5 @@ HELP.md
 
 ### DB ###
 database.*.db
+
+.DS_Store

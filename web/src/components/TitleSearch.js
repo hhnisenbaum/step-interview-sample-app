@@ -29,7 +29,7 @@ class TitleSearch extends Component {
             <span style={ visuallyHiddenCss }>
               <Label htmlFor="title">Search title</Label>
             </span>
-            <Input id="title" type="number" min="0" textinput="validity.valid||(value='');" data-cy="input" value={this.state.value} onChange={this.handleChange} placeholder="Enter a title number" />
+            <Input id="title" type="number" min="1" step="1" data-cy="input" value={this.state.value} onChange={this.handleChange} placeholder="Enter a title number" />
             &nbsp;
             <Button color="primary" type="submit" value="Submit" data-cy="submit" disabled={!this.state.value}>Go</Button>
           </Form>

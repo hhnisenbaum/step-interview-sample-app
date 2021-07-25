@@ -9,6 +9,22 @@ it("renders without crashing", () => {
   ReactDOM.render(<App />, div);
 });
 
+describe("input control", () => {
+  it("allows  only numbers", async () => {
+    const { findByLabelText } = render(<App />);
+    const searchInput = await findByLabelText("Search title");
+    fireEvent.change(searchInput, { target: { value: "homer" } });
+    expect(searchInput.innerHTML).toBe("");
+  });
+
+  it("has input min and step values", async () => {
+    const { findByLabelText } = render(<App />);
+    const searchInput = await findByLabelText("Search title");
+    expect(searchInput.getAttribute("min")).toBe("1");
+    expect(searchInput.getAttribute("step")).toBe("1");
+  });
+})
+
 describe("searches for titles", () => {
 
   it("searches for an invalid title number", async () => {
@@ -44,15 +60,5 @@ describe("searches for titles", () => {
   });
 })
 
-describe("input control", () => {
-  it("validate only numbers", async () => {
-    nock('http://localhost:80')
-    .get('/api/titles/123')
-    .reply(404);
-    const { findByLabelText } = render(<App />);
-    const searchInput = await findByLabelText("Search title");
-    fireEvent.change(searchInput, { target: { value: "homer" } });
-    expect(searchInput.innerHTML).toBe("");
-  });
-})
+
 
