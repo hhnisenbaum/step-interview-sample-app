@@ -70,7 +70,7 @@ class TitlePage extends Component {
       return (
         <div>
           <h3 data-cy="title">Title #{titleNo} </h3>
-          {this.state.data === undefined && (this.state.notFound ? <p>Incorrect title number. #{titleNo} not found in the library</p> : <p>Loading...</p>)}
+          {this.state.data === undefined && (this.state.notFound ? <p data-testid="text">Incorrect title number. #{titleNo} not found in the library</p> : <p>Loading...</p>)}
           {this.state.data && <div>
             <Table>
                 <tbody>

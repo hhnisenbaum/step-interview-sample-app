@@ -10,17 +10,20 @@ it("renders without crashing", () => {
 });
 
 describe("searches for titles", () => {
+
   it("searches for an invalid title number", async () => {
     nock('http://localhost:80')
       .get('/api/titles/123')
       .reply(404);
-    const { findByLabelText, findByRole, findByText } = render(<App />);
+    const { findByLabelText, findByRole, findByTestId } = render(<App />);
     const searchInput = await findByLabelText("Search title");
     fireEvent.change(searchInput, { target: { value: "123" } });
     const submitButton = await findByRole("button", { name: "Go" });
     submitButton.click();
-    await findByText("Incorrect title number");
+    const textDisplay = await findByTestId("text");
+    expect(textDisplay.innerHTML).toBe("Incorrect title number. #123 not found in the library");
   });
+
   it("searches for a valid title number", async () => {
     nock('http://localhost:80')
       .get('/api/titles/123')
@@ -40,3 +43,16 @@ describe("searches for titles", () => {
     expect(owner.innerHTML).toBe("Homer");
   });
 })
+
+describe("input control", () => {
+  it("validate only numbers", async () => {
+    nock('http://localhost:80')
+    .get('/api/titles/123')
+    .reply(404);
+    const { findByLabelText } = render(<App />);
+    const searchInput = await findByLabelText("Search title");
+    fireEvent.change(searchInput, { target: { value: "homer" } });
+    expect(searchInput.innerHTML).toBe("");
+  });
+})
+
